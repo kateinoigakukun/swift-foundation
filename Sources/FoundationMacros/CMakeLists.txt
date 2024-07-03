@@ -12,10 +12,25 @@
 ##
 ##===----------------------------------------------------------------------===##
 
+cmake_minimum_required(VERSION 3.22)
+
+if(POLICY CMP0156)
+    # Deduplicate linked libraries where appropriate
+    cmake_policy(SET CMP0156 NEW)
+endif()
+if(POLICY CMP0157)
+    # New Swift build model: improved incremental build performance and LSP support
+  cmake_policy(SET CMP0157 NEW)
+endif()
+
+project(FoundationMacros
+  LANGUAGES Swift)
+
 # SwiftSyntax Dependency
-include(FetchContent)
 find_package(SwiftSyntax)
 if(NOT SwiftSyntax_FOUND)
+    include(FetchContent)
+
     # If building at desk, check out and link against the SwiftSyntax repo's targets
     FetchContent_Declare(SwiftSyntax
         GIT_REPOSITORY https://github.com/swiftlang/swift-syntax.git

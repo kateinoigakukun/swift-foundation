@@ -12,12 +12,27 @@
 ##
 ##===----------------------------------------------------------------------===##
 
-add_subdirectory(_FoundationCShims)
-
-# Disable the macro build on Windows until we can correctly build it for the host architecture
-if(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
-	add_subdirectory(FoundationMacros)
+include(ExternalProject)
+if(CMAKE_HOST_WIN32)
+  set(_FoundationMacrosSwiftFlags -DCMAKE_Swift_FLAGS="-use-ld=lld")
+endif()
+ExternalProject_Add(FoundationMacros
+  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/FoundationMacros"
+  PREFIX "${CMAKE_BINARY_DIR}/_deps"
+  BINARY_DIR "macros"
+  CMAKE_ARGS
+    -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
+    ${_FoundationMacrosSwiftFlags}
+  INSTALL_COMMAND "")
+ExternalProject_Get_Property(FoundationMacros BINARY_DIR)
+if(CMAKE_HOST_WIN32)
+  set(_SwiftFoundation_PredicateMacro "${BINARY_DIR}/FoundationMacros.exe#PredicateMacro")
+  set(_SwiftFoundation_ExpressionMacro "${BINARY_DIR}/FoundationMacros.exe#ExpressionMacro")
+else()
+  set(_SwiftFoundation_PredicateMacro "${BINARY_DIR}/FoundationMacros#PredicateMacro")
+  set(_SwiftFoundation_ExpressionMacro "${BINARY_DIR}/FoundationMacros#ExpressionMacro")
 endif()
 
+add_subdirectory(_FoundationCShims)
 add_subdirectory(FoundationEssentials)
 add_subdirectory(FoundationInternationalization)
