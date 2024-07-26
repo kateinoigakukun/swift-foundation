@@ -22,6 +22,7 @@ ExternalProject_Add(FoundationMacros
   BINARY_DIR "macros"
   CMAKE_ARGS
     -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
+    -DCMAKE_Swift_COMPILER=${CMAKE_Swift_COMPILER}
     ${_FoundationMacrosSwiftFlags}
   INSTALL_COMMAND "")
 ExternalProject_Get_Property(FoundationMacros BINARY_DIR)
