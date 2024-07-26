@@ -26,6 +26,10 @@ internal import _FoundationCShims
 #elseif os(Windows)
 import CRT
 import WinSDK
+#elseif os(WASI)
+internal import _FoundationCShims
+import WASILibc
+import var WASILibc.errno
 #endif
 
 extension Date {

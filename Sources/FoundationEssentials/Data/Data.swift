@@ -40,6 +40,7 @@ import Bionic
 @usableFromInline let memcpy = Musl.memcpy
 @usableFromInline let memcmp = Musl.memcmp
 #elseif canImport(WASILibc)
+import WASILibc
 @usableFromInline let calloc = WASILibc.calloc
 @usableFromInline let malloc = WASILibc.malloc
 @usableFromInline let free = WASILibc.free
@@ -76,6 +77,9 @@ import Glibc
 import Musl
 #elseif canImport(ucrt)
 import ucrt
+#elseif canImport(WASILibc)
+import WASILibc
+import wasi_emulated_mman
 #endif
 
 #if os(Windows)
