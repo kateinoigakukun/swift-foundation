@@ -118,6 +118,7 @@ internal import _FoundationCShims
 #elseif os(WASI)
 import WASILibc
 internal import _FoundationCShims
+import var WASILibc.errno
 #endif
 
 // MARK: Directory Iteration

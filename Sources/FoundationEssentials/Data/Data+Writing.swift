@@ -29,6 +29,7 @@ import CRT
 import WinSDK
 #elseif os(WASI)
 import WASILibc
+import var WASILibc.errno
 #endif
 
 #if !NO_FILESYSTEM

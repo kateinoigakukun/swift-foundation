@@ -29,6 +29,7 @@ import WinSDK
 #elseif os(WASI)
 internal import _FoundationCShims
 import WASILibc
+import var WASILibc.errno
 #endif
 
 extension Date {
